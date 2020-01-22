@@ -25,6 +25,11 @@ void testBasicFunction(){
     mystr2.append("_boxboz");
     cout << mystr2 << endl;
 
+    mystr2.append(mystr3);
+    cout << mystr2 << endl;
+
+    cout << mystr3 << endl;
+
 }
 
 int main() {

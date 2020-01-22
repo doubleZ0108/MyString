@@ -81,7 +81,7 @@ public:
             this->str = (char *)malloc(sizeof(char)*this->length);
             memcpy(this->str, buf_str, sizeof(char)*origin_len);
             memcpy(this->str+origin_len, appendix_str, sizeof(char)*fresh_len);
-        }else{
+        } else{
             this->length = strlen(appendix_str);
             int temp_size = sizeof(char) * this->length;
             this->str = (char *)malloc(temp_size);
@@ -90,7 +90,25 @@ public:
     }
 
     void append(const MyString& appendix_mystr){
-        
+        if(this->str){
+            char* buf_str = (char *)malloc(sizeof(char)*this->length);
+            memcpy(buf_str, this->str, sizeof(char)*this->length);
+
+            int origin_len = this->length;
+            int fresh_len = appendix_mystr.size();
+            this->length += fresh_len;
+
+            free(this->str);
+            this->str = NULL;
+            this->str = (char *)malloc(sizeof(char)*this->length);
+            memcpy(this->str, buf_str, sizeof(char)*origin_len);
+            memcpy(this->str+origin_len, appendix_mystr.getStr(), sizeof(char)*fresh_len);
+        } else{
+            this->length = appendix_mystr.size();
+            int temp_size = sizeof(char) * this->length;
+            this->str = (char *)malloc(temp_size);
+            memcpy(this->str, appendix_mystr.getStr(), temp_size);
+        }
     }
 };
 
