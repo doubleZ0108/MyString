@@ -14,11 +14,14 @@
 #include <cstring>
 using namespace std;
 
+class MyString;
+int mystrcmp(const MyString& mystr1, const MyString& mystr2);
+
 class MyString{
 
     friend ostream& operator<<(ostream& os, const MyString& mystr);
 
-private:
+        private:
     char* str = NULL;
     int length = 0;
 
@@ -64,6 +67,30 @@ public:
 
     const char operator[](int index) const{
         return *(str + index);
+    }
+
+    bool operator==(const MyString& rhv){
+        return (mystrcmp(*this, rhv) == 0);
+    }
+
+    bool operator!=(const MyString& rhv){
+        return !(*this==rhv);
+    }
+
+    bool operator<(const MyString& rhv){
+        return (mystrcmp(*this, rhv) < 0);
+    }
+
+    bool operator>(const MyString& rhv){
+        return (mystrcmp(*this, rhv) > 0);
+    }
+
+    bool operator<=(const MyString& rhv){
+        return (*this<rhv || *this==rhv);
+    }
+
+    bool operator>=(const MyString& rhv){
+        return (*this>rhv || *this==rhv);
     }
 
     /* Append */
@@ -118,6 +145,23 @@ ostream& operator<<(ostream& os, const MyString& mystr){
         os << mystr[i];
     }
     return os;
+}
+
+int mystrcmp(const MyString& mystr1, const MyString& mystr2){
+    for(int i=0;i<mystr1.size() && i<mystr2.size();++i){
+        if(mystr1[i]<mystr2[i]){
+            return -1;
+        }else if(mystr1[i]>mystr2[i]){
+            return 1;
+        }
+    }
+    if(mystr1.size() < mystr2.size()){
+        return -1;
+    }else if(mystr1.size() > mystr2.size()){
+        return 1;
+    }
+
+    return 0;
 }
 
 #endif //MYSTRING_MYSTRING_H
