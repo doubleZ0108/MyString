@@ -142,14 +142,15 @@ public:
     /* Append */
     void append(const char* appendix_str){
         if(this->str){
-            char* buf_str = (char *)malloc(sizeof(char)*this->length);
-            memcpy(buf_str, this->str, sizeof(char)*this->length);
+//            char* buf_str = (char *)malloc(sizeof(char)*this->length);
+//            memcpy(buf_str, this->str, sizeof(char)*this->length);
+            char* buf_str = this->str;
 
             int origin_len = this->length;
             int fresh_len = strlen(appendix_str);
             this->length += fresh_len;
 
-            free(this->str);
+//            free(this->str);
             this->str = NULL;
             this->str = (char *)malloc(sizeof(char)*this->length);
             memcpy(this->str, buf_str, sizeof(char)*origin_len);
@@ -166,14 +167,12 @@ public:
 
     void append(const MyString& appendix_mystr){
         if(this->str){
-            char* buf_str = (char *)malloc(sizeof(char)*this->length);
-            memcpy(buf_str, this->str, sizeof(char)*this->length);
+            char* buf_str = this->str;
 
             int origin_len = this->length;
             int fresh_len = appendix_mystr.size();
             this->length += fresh_len;
 
-            free(this->str);
             this->str = NULL;
             this->str = (char *)malloc(sizeof(char)*this->length);
             memcpy(this->str, buf_str, sizeof(char)*origin_len);
