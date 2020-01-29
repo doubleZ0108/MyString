@@ -2,7 +2,7 @@
 #include "../Header/mystring.h"
 using namespace std;
 
-void testBasicFunction(){
+void testConstructor(){
     MyString mystr;
     MyString mystr2("a_string");
     MyString mystr3(mystr2);
@@ -30,6 +30,22 @@ void testBasicFunction(){
 
     cout << mystr3 << endl;
 }
+
+void testAssignOperator(){
+    MyString mystr;
+    mystr = "hello";
+
+    MyString mystr2;
+    mystr2 = mystr;
+
+    MyString mystr3;
+    mystr3 = 'c';
+
+    mystr = mystr;      //自我赋值
+
+    mystr = mystr2 = mystr3 = "world";  //连续赋值
+}
+
 
 void testRelationOperator(){
     cout << (MyString("abc") == MyString("abc")) << endl;
@@ -68,10 +84,11 @@ void testNullCharacter(){
 }
 
 int main() {
-//    testBasicFunction();
+//    testConstant();
+    testAssignOperator();
 //    testRelationOperator();
 //    testConstant();
-    testNullCharacter();
+//    testNullCharacter();
 
     return 0;
 }

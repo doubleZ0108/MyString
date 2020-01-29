@@ -21,7 +21,7 @@ class MyString{
 
     friend ostream& operator<<(ostream& os, const MyString& mystr);
 
-        private:
+private:
     char* str = NULL;
     int length = 0;
 
@@ -43,12 +43,58 @@ public:
         memcpy(this->str, source_mystr.getStr(), temp_size);
     }
 
+    MyString(char source_ch){
+        this->length = 1;
+        int temp_size = sizeof(char) * this->length;
+        this->str = (char *)malloc(temp_size);
+        *this->str = source_ch;
+    }
+
     /* Destructor */
     ~MyString(){
         if(str){
             free(this->str);
             this->str = NULL;
         }
+    }
+
+    /* Assign Operator*/
+    MyString& operator=(const MyString& source_mystr){
+        if(this == &source_mystr){
+            return *this;
+        }else if(this->str){
+            free(this->str);
+            this->str = NULL;
+        }
+        this->length = source_mystr.size();
+        int temp_size = sizeof(char) * this->length;
+        this->str = (char *)malloc(temp_size);
+        memcpy(this->str, source_mystr.getStr(), temp_size);
+        return *this;
+    }
+
+    MyString& operator=(const char* source_str){
+        if(this->str){
+            free(this->str);
+            this->str = NULL;
+        }
+        this->length = strlen(source_str);
+        int temp_size = sizeof(char) * this->length;
+        this->str = (char *)malloc(temp_size);
+        memcpy(this->str, source_str, temp_size);
+        return *this;
+    }
+
+    MyString& operator=(char source_ch){
+        if(this->str){
+            free(this->str);
+            this->str = NULL;
+        }
+        this->length = 1;
+        int temp_size = sizeof(char) * this->length;
+        this->str = (char *)malloc(temp_size);
+        *this->str = source_ch;
+        return *this;
     }
 
     /* Getter */
@@ -108,6 +154,8 @@ public:
             this->str = (char *)malloc(sizeof(char)*this->length);
             memcpy(this->str, buf_str, sizeof(char)*origin_len);
             memcpy(this->str+origin_len, appendix_str, sizeof(char)*fresh_len);
+
+            free(buf_str);
         } else{
             this->length = strlen(appendix_str);
             int temp_size = sizeof(char) * this->length;
@@ -130,6 +178,8 @@ public:
             this->str = (char *)malloc(sizeof(char)*this->length);
             memcpy(this->str, buf_str, sizeof(char)*origin_len);
             memcpy(this->str+origin_len, appendix_mystr.getStr(), sizeof(char)*fresh_len);
+
+            free(buf_str);
         } else{
             this->length = appendix_mystr.size();
             int temp_size = sizeof(char) * this->length;
